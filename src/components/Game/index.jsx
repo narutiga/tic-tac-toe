@@ -12,7 +12,7 @@ export function Game() {
   const current = history[history.length - 1];
   const squares = [...current];
   const winner = calculateWinner(current);
-  let status = calculateStatus(winner);
+  const status = calculateStatus(winner);
 
   // Function
   const handleClick = useCallback(
@@ -20,7 +20,6 @@ export function Game() {
       squares[i] = xIsNext ? "×" : "○";
 
       setXIsNext((prevXIsNext) => !prevXIsNext);
-
       setHistory((prevHistory) => {
         return [...prevHistory, squares];
       });
@@ -29,8 +28,9 @@ export function Game() {
   );
 
   // 今ここ
-  const handleStep = useCallback((step) => {
-    console.log(step);
+  const handleStep = useCallback((move) => {
+    setStepNumber(move);
+    setXIsNext(move % 2 === 0);
   }, []);
 
   function calculateWinner(current) {
