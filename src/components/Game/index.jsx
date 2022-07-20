@@ -3,22 +3,22 @@ import { Board } from "src/components/Board";
 // import styles from "../styles/Home.module.css";
 
 export function Game() {
+  // State
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
+  const [stepNumber, setStepNumber] = useState(0);
 
+  //
   const current = history[history.length - 1];
-  const winner = calculateWinner(squares);
+  const squares = [...current];
+  const winner = calculateWinner(current);
   let status = calculateStatus(winner);
 
-  // 今ここ。historyに入るものがひとつズレる。。。
+  // Function
   const handleClick = useCallback(
     (i) => {
-      setSquares((prevSquares) => {
-        const newSquares = [...prevSquares];
-        newSquares[i] = xIsNext ? "×" : "○";
-        return newSquares;
-      });
+      squares[i] = xIsNext ? "×" : "○";
+
       setXIsNext((prevXIsNext) => !prevXIsNext);
 
       setHistory((prevHistory) => {
@@ -28,7 +28,12 @@ export function Game() {
     [xIsNext]
   );
 
-  function calculateWinner(squares) {
+  // 今ここ
+  const handleStep = useCallback((step) => {
+    console.log(step);
+  }, []);
+
+  function calculateWinner(current) {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -42,11 +47,11 @@ export function Game() {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
-        squares[a] &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
+        current[a] &&
+        current[a] === current[b] &&
+        current[a] === current[c]
       ) {
-        return squares[a];
+        return current[a];
       }
     }
     return null;
@@ -61,8 +66,24 @@ export function Game() {
   }
 
   return (
-    <div>
-      <Board squares={current} handleClick={handleClick} status={status} />
+    <div className="game">
+      <div className="game-board">
+        <Board squares={current} handleClick={handleClick} status={status} />
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <ol>
+          {history.map((step, move) => {
+            return (
+              <li key={move}>
+                <button onClick={() => handleStep(move)}>
+                  {move ? "Go to move #" + move : "Go to game start"}
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </div>
   );
 }
