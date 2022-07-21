@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Board } from "src/components/Board";
-// import styles from "../styles/Home.module.css";
+import classes from "src/components/Game/Game.module.css";
 
 export function Game() {
   // State
@@ -8,11 +8,11 @@ export function Game() {
   const [xIsNext, setXIsNext] = useState(true);
   const [stepNumber, setStepNumber] = useState(0);
 
-  //
   const current = history[stepNumber];
   const squares = [...current];
   const winner = calculateWinner(current);
   const status = calculateStatus(winner);
+
   // マス目クリック時
   const handleClick = useCallback(
     (i) => {
@@ -69,11 +69,11 @@ export function Game() {
   }
 
   return (
-    <div className="game">
-      <div className="game-board">
+    <div className={classes.game}>
+      <div className={classes.gameBoard}>
         <Board squares={current} handleClick={handleClick} status={status} />
       </div>
-      <div className="game-info">
+      <div className={classes.gameInfo}>
         <div>{status}</div>
         <ol>
           {history.map((step, move) => {
