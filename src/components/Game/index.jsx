@@ -9,30 +9,32 @@ export function Game() {
   const [stepNumber, setStepNumber] = useState(0);
 
   //
-  const current = history[history.length - 1];
+  const current = history[stepNumber];
   const squares = [...current];
   const winner = calculateWinner(current);
   const status = calculateStatus(winner);
-
-  // Function
+  // マス目クリック時
   const handleClick = useCallback(
     (i) => {
       squares[i] = xIsNext ? "×" : "○";
 
-      setXIsNext((prevXIsNext) => !prevXIsNext);
       setHistory((prevHistory) => {
-        return [...prevHistory, squares];
+        const newHistory = prevHistory.slice(0, stepNumber + 1);
+        return [...newHistory, squares];
       });
+      setXIsNext((prevXIsNext) => !prevXIsNext);
+      setStepNumber((prevSetNunmer) => prevSetNunmer + 1);
     },
     [xIsNext]
   );
 
-  // 今ここ
+  // 履歴ボタンクリック時
   const handleStep = useCallback((move) => {
     setStepNumber(move);
     setXIsNext(move % 2 === 0);
   }, []);
 
+  // 勝敗判定
   function calculateWinner(current) {
     const lines = [
       [0, 1, 2],
@@ -57,6 +59,7 @@ export function Game() {
     return null;
   }
 
+  // 状況判定
   function calculateStatus(winner) {
     if (winner) {
       return "Winner: " + winner;
