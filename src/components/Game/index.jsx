@@ -15,8 +15,8 @@ export function Game() {
 
   // マス目クリック時
   const handleClick = useCallback(
-    (i) => {
-      squares[i] = xIsNext ? "×" : "○";
+    (id) => {
+      squares[id] = xIsNext ? "×" : "○";
 
       setHistory((prevHistory) => {
         const newHistory = prevHistory.slice(0, stepNumber + 1);
@@ -25,7 +25,7 @@ export function Game() {
       setXIsNext((prevXIsNext) => !prevXIsNext);
       setStepNumber((prevSetNunmer) => prevSetNunmer + 1);
     },
-    [xIsNext]
+    [xIsNext, stepNumber]
   );
 
   // 履歴ボタンクリック時
