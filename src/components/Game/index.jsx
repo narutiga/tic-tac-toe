@@ -14,7 +14,7 @@ export function Game() {
   // マス目クリック時
   const handleClick = useCallback(
     (id) => {
-      squares[id] = xIsNext ? "×" : "○";
+      squares[id] = xIsNext ? "×" : "●";
 
       setHistory((prevHistory) => {
         const newHistory = prevHistory.slice(0, stepNumber + 1);
@@ -62,7 +62,7 @@ export function Game() {
     if (winner) {
       return "Winner: " + winner;
     } else {
-      return xIsNext ? "Next player: ×" : "Next player: ○";
+      return xIsNext ? "Next player: ×" : "Next player: ●";
     }
   };
 
@@ -75,7 +75,7 @@ export function Game() {
         <Board squares={current} handleClick={handleClick} status={status} />
       </div>
       <div className={classes.gameInfo}>
-        <div>{status}</div>
+        <div className={classes.status}>{status}</div>
         <ol>
           {history.map((step, move) => {
             return (

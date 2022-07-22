@@ -1,14 +1,43 @@
 .game {
+  max-width: 600px;
+  width: 80%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .gameInfo {
-  margin-left: 20px;
+  min-width: 300px;
+  display: grid;
+  justify-items: center;
 }
 
-@media (max-width: 600px) {
+.status {
+  text-align: left;
+  vertical-align: bottom;
+  width: 180px;
+  height: 36px;
+}
+
+.button {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  list-style-position: inside;
+  width: 180px;
+  font-size: 18px;
+  color: #f4f5f7;
+  border: solid 1px #929292;
+  border-radius: 12px;
+  background-color: #929292;
+}
+
+@media (max-width: 800px) {
   .game {
     flex-direction: column;
+  }
+
+  .gameInfo {
+    margin-top: 16px;
   }
 }
