@@ -14,8 +14,11 @@ export function Game() {
   // マス目クリック時
   const handleClick = useCallback(
     (id) => {
-      squares[id] = xIsNext ? "×" : "●";
+      if (calculateWinner(squares) || squares[id]) {
+        return;
+      }
 
+      squares[id] = xIsNext ? "×" : "●";
       setHistory((prevHistory) => {
         const newHistory = prevHistory.slice(0, stepNumber + 1);
         return [...newHistory, squares];
