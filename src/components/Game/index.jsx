@@ -10,8 +10,6 @@ export function Game() {
 
   const current = history[stepNumber];
   const squares = [...current];
-  const winner = calculateWinner(current);
-  const status = calculateStatus(winner);
 
   // マス目クリック時
   const handleClick = useCallback(
@@ -25,7 +23,7 @@ export function Game() {
       setXIsNext((prevXIsNext) => !prevXIsNext);
       setStepNumber((prevSetNunmer) => prevSetNunmer + 1);
     },
-    [xIsNext, stepNumber]
+    [stepNumber]
   );
 
   // 履歴ボタンクリック時
@@ -35,7 +33,7 @@ export function Game() {
   }, []);
 
   // 勝敗判定
-  function calculateWinner(current) {
+  const calculateWinner = (current) => {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -57,16 +55,19 @@ export function Game() {
       }
     }
     return null;
-  }
+  };
 
   // 状況判定
-  function calculateStatus(winner) {
+  const calculateStatus = (winner) => {
     if (winner) {
       return "Winner: " + winner;
     } else {
       return xIsNext ? "Next player: ×" : "Next player: ○";
     }
-  }
+  };
+
+  const winner = calculateWinner(current);
+  const status = calculateStatus(winner);
 
   return (
     <div className={classes.game}>
@@ -79,7 +80,10 @@ export function Game() {
           {history.map((step, move) => {
             return (
               <li key={move}>
-                <button onClick={() => handleStep(move)}>
+                <button
+                  className={classes.button}
+                  onClick={() => handleStep(move)}
+                >
                   {move ? "Go to move #" + move : "Go to game start"}
                 </button>
               </li>
