@@ -1,8 +1,8 @@
 .boardRow {
-  min-width: 204px;
   display: table;
   margin-right: auto;
   margin-left: auto;
+  min-width: 204px;
 }
 
 .boardRow:after {
